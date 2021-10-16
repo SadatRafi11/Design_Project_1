@@ -3,6 +3,28 @@ const gql = require("graphql-tag");
 require("graphql");
 
 module.exports = gql`
+  type Comment {
+    id: ID!
+    commentBody: String!
+    email: String!
+    username: String!
+    createdAt: String!
+  }
+  type Like {
+    id: ID!
+    email: String!
+    username: String!
+    createdAt: String!
+  }
+  type Post {
+    id: ID!
+    postBody: String!
+    email: String!
+    username: String!
+    likes: [Like]!
+    comments: [Comment]!
+    createdAt: String!
+  }
   type User {
     id: ID!
     email: String!
@@ -11,19 +33,26 @@ module.exports = gql`
     createdAt: String!
   }
 
-  input LoginInput {
-    email: String!
-    password: String!
-  }
   input RegisterInput {
     email: String!
     username: String!
     password: String!
     confirmPassword: String!
   }
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
+  type Query {
+    getPosts: [Post]
+    getPost(postId: ID!): Post
+  }
 
   type Mutation {
     register(registerInput: RegisterInput!): User!
     login(loginInput: LoginInput!): User!
+    createPost(postBody: String!): Post!
+    deletePost(postId: ID!): String!
   }
 `;
