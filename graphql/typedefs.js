@@ -43,6 +43,10 @@ module.exports = gql`
     email: String!
     password: String!
   }
+  input CommentInput {
+    postId: ID!
+    commentBody: String!
+  }
 
   type Query {
     getPosts: [Post]
@@ -54,5 +58,8 @@ module.exports = gql`
     login(loginInput: LoginInput!): User!
     createPost(postBody: String!): Post!
     deletePost(postId: ID!): String!
+    createComment(commentInput: CommentInput!): Post!
+    deleteComment(postId: ID!, commentId: ID!): Post!
+    likePost(postId: ID!): Post!
   }
 `;
