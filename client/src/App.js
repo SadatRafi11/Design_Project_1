@@ -13,12 +13,12 @@ import Register from "./pages/Register";
 function App() {
   return (
     <Router>
-      <div className="ui container">
+      <Container>
         <MenuBar />
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-      </div>
+      </Container>
     </Router>
   );
 }
