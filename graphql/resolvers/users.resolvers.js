@@ -24,18 +24,14 @@ module.exports = {
         throw new UserInputError("Errors", { errors });
       }
 
-      try {
-        const user = await User.findOne({ email });
+      const user = await User.findOne({ email });
 
-        if (user) {
-          throw new UserInputError("User already exists!", {
-            errors: {
-              email: "User already exists!",
-            },
-          });
-        }
-      } catch (err) {
-        throw new Error(err);
+      if (user) {
+        throw new UserInputError("User already exists!", {
+          errors: {
+            general: "User already exists!",
+          },
+        });
       }
 
       try {
@@ -72,35 +68,31 @@ module.exports = {
         throw new UserInputError("Errors", { errors });
       }
 
-      try {
-        const user = await User.findOne({ email });
-        if (!user) {
-          throw new UserInputError("User not found!", {
-            errors: {
-              general: "User not found!",
-            },
-          });
-        }
-
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) {
-          throw new UserInputError("Wrong credentials!", {
-            errors: {
-              general: "Wrong credentials!",
-            },
-          });
-        }
-
-        const token = generateToken(user);
-
-        return {
-          ...user._doc,
-          id: user._id,
-          token,
-        };
-      } catch (err) {
-        throw new Error(err);
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new UserInputError("User not found!", {
+          errors: {
+            general: "User not found!",
+          },
+        });
       }
+
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+        throw new UserInputError("Wrong credentials!", {
+          errors: {
+            general: "Wrong credentials!",
+          },
+        });
+      }
+
+      const token = generateToken(user);
+
+      return {
+        ...user._doc,
+        id: user._id,
+        token,
+      };
     },
   },
 };

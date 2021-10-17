@@ -8,8 +8,6 @@ import PostCard from "../components/PostCard";
 function Home() {
   const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 
-  console.log(data);
-
   if (data) {
     const posts = data.getPosts;
     return (
@@ -34,7 +32,7 @@ function Home() {
   } else {
     return (
       <div>
-        <h1>Loading data...</h1>
+        <h1>Loading posts...</h1>
       </div>
     );
   }
