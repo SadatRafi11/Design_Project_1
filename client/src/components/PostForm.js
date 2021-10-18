@@ -30,7 +30,7 @@ function PostForm() {
   return (
     <>
       <Form onSubmit={onSubmit}>
-        <h2>Create a post:</h2>
+        <h2>Share your work:</h2>
         <Form.Field style={{ marginBottom: 24 }}>
           <Form.Input
             placeholder="Share your work!"
